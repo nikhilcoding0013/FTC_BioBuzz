@@ -17,9 +17,11 @@
 
 import java.util.regex.Pattern
 
+apply plugin: 'com.android.application'
+
 android {
 
-    compileSdkVersion 30
+    compileSdkVersion 29
 
     signingConfigs {
         release {
@@ -43,6 +45,10 @@ android {
             storeFile rootProject.file('libs/ftc.debug.keystore')
             storePassword 'android'
         }
+    }
+
+    aaptOptions {
+        noCompress "tflite"
     }
 
     defaultConfig {
@@ -106,6 +112,10 @@ android {
 
     packagingOptions {
         pickFirst '**/*.so'
+    }
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDir rootProject.file('libs')
     }
     ndkVersion '21.3.6528147'
 }
